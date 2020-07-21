@@ -1,2 +1,2 @@
-# pdf_convert_version
+# PDF convert version
 Force PDF version of file
