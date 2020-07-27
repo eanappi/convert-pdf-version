@@ -4,19 +4,15 @@ import pikepdf
 """ Structure directories
 """
 
-SOURCE_PDF_DIR = input("Input source folder: ")
-
-if not os.path.exists(SOURCE_PDF_DIR):
-    print('Folder isn\'t found.')
-    exit()
-
-SOURCE_PDF_LIST = os.listdir(path=f'{SOURCE_PDF_DIR}')
+SOURCE_PDF_DIR = input('Input source folder: ')
 TARGET_PDF_DIR = f'{SOURCE_PDF_DIR}/convert_PDF'
 
-if not SOURCE_PDF_LIST:
-    print('Folder is empty')
-    exit()
-
+with os.scandir(path=f'{SOURCE_PDF_DIR}') as files:
+    for file in files:
+        if file.is_file(follow_symlinks=False) and file.name.endswith('.pdf'):
+            print(file.name)
+ 
+    
 """
 for file in SOURCE_PDF_LIST:
     if not SOURCE_PDF_LIST:
