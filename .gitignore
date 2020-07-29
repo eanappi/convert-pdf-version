@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # PDF files converted
-example/convert_PDF
+example/
