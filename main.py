@@ -17,7 +17,7 @@ def convert_PDF_version(path_src, path_des):
                 with pikepdf.open(file_src) as pdf_source_file:
                     pdf_source_file.save(file_des, force_version='1.4')
 
-def process_log(path_file_dest):
+def show_progress(path_src, path_dest):
     
 
 if not os.path.exists(SOURCE_PDF_DIR):
