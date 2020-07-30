@@ -4,7 +4,6 @@ import pikepdf
 SOURCE_PDF_DIR = input('Input source folder: ')
 DESTINY_PDF_DIR = f'{SOURCE_PDF_DIR}/convert_PDF'
 
-
 def convert_PDF_version(path_src, path_des):
     with os.scandir(path=f'{path_src}') as files:
         for file in files:
@@ -17,9 +16,10 @@ def convert_PDF_version(path_src, path_des):
                 
                 with pikepdf.open(file_src) as pdf_source_file:
                     pdf_source_file.save(file_des, force_version='1.4')
-                    
 
-                    
+def process_log(path_file_dest):
+    
+
 if not os.path.exists(SOURCE_PDF_DIR):
     exit('Path isn\'t found.')
 elif not os.path.exists(DESTINY_PDF_DIR):
