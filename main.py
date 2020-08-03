@@ -1,4 +1,6 @@
 import os
+import sys
+import fnmatch
 import pikepdf
 
 SOURCE_PDF_DIR = input('Input source folder: ')
@@ -13,12 +15,13 @@ def convert_PDF_version(path_src, path_des):
             if is_file and is_pdf:
                 file_src = (os.path.join(path_src, file.name))
                 file_des = (os.path.join(path_des, file.name))
-                
+
                 with pikepdf.open(file_src) as pdf_source_file:
                     pdf_source_file.save(file_des, force_version='1.4')
+                    sys.stdout.write('.')
 
-def show_progress(path_src, path_dest):
-    
+#def compare_files(path_src, path_dest):
+
 
 if not os.path.exists(SOURCE_PDF_DIR):
     exit('Path isn\'t found.')
