@@ -1,9 +1,19 @@
-import os, sys, fnmatch
-import pikepdf
+#!/usr/bin/env python3
+import os, sys, fnmatch, pikepdf, argparse
 
-SOURCE_PDF_DIR = input('Input source folder: ')
-DESTINY_PDF_DIR = f'{SOURCE_PDF_DIR}/convert_PDF'
-DESTINY_PDF_VER = '1.5'
+arguments = argparse.ArgumentParser(
+    description = 'PDF file convert version')
+arguments.add_argument(
+    '-s', '--source', required=True, 
+    help='Input source path PDF files to convert')
+arguments.add_argument(
+    '-t', '--target', required=True, 
+    help='Input target path to send convert files')
+arguments.add_argument(
+    '-v', '--version', required=True, 
+    help='Input target version')
+
+args = arguments.parse_args()
 
 def convert_PDF_version(path_src, path_des):
     with os.scandir(path=f'{path_src}') as files:
@@ -11,14 +21,15 @@ def convert_PDF_version(path_src, path_des):
             is_file = file.is_file(follow_symlinks=False)
             is_pdf = file.name.endswith('.pdf')
 
+            sys.stdout.write('.')
+
             if is_file and is_pdf:
                 file_src = (os.path.join(path_src, file.name))
                 file_des = (os.path.join(path_des, file.name))
 
                 with pikepdf.open(file_src) as pdf_source_file:
                     pdf_source_file.save(
-                        file_des, force_version=DESTINY_PDF_VER)
-                    sys.stdout.write('.')
+                        file_des, force_version=args.version)
 
 def compare_files(path_src, path_dst):
     list_src = fnmatch.filter(os.listdir(path_src), '*.pdf')
@@ -28,10 +39,10 @@ def compare_files(path_src, path_dst):
     print('\nThe different files are: ', list_difference)
 
 
-if not os.path.exists(SOURCE_PDF_DIR):
+if not os.path.exists(args.source):
     exit('Path isn\'t found.')
-elif not os.path.exists(DESTINY_PDF_DIR):
-    os.mkdir(DESTINY_PDF_DIR)
+elif not os.path.exists(args.target):
+    os.mkdir(args.target)
 
-convert_PDF_version(SOURCE_PDF_DIR, DESTINY_PDF_DIR)
-compare_files(SOURCE_PDF_DIR, DESTINY_PDF_DIR)
+convert_PDF_version(args.source, args.target)
+compare_files(args.source, args.target)
