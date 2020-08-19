@@ -5,13 +5,13 @@ arguments = argparse.ArgumentParser(
     description = 'PDF file convert version')
 arguments.add_argument(
     '-s', '--source', required=True, 
-    help='Input source path PDF files to convert')
+    help='Source path folder')
 arguments.add_argument(
     '-t', '--target', required=True, 
-    help='Input target path to send convert files')
+    help='Target path folder to send convert files')
 arguments.add_argument(
     '-v', '--version', required=True, 
-    help='Input target version')
+    help='Target file version')
 
 args = arguments.parse_args()
 
