@@ -15,7 +15,7 @@ arguments.add_argument(
 
 args = arguments.parse_args()
 
-def convert_PDF_version(path_src, path_des):
+def convert_PDF_version(path_src, path_des, pdf_version):
     with os.scandir(path=f'{path_src}') as files:
         for file in files:
             is_file = file.is_file(follow_symlinks=False)
@@ -29,7 +29,10 @@ def convert_PDF_version(path_src, path_des):
 
                 with pikepdf.open(file_src) as pdf_source_file:
                     pdf_source_file.save(
-                        file_des, force_version=args.version)
+                        file_des,
+                        preserve_pdfa=True,
+                        object_stream_mode=pikepdf.ObjectStreamMode.disable,  
+                        force_version=pdf_version)
 
 def compare_files(path_src, path_dst):
     list_src = fnmatch.filter(os.listdir(path_src), '*.pdf')
@@ -44,5 +47,5 @@ if not os.path.exists(args.source):
 elif not os.path.exists(args.target):
     os.mkdir(args.target)
 
-convert_PDF_version(args.source, args.target)
+convert_PDF_version(args.source, args.target, args.version)
 compare_files(args.source, args.target)
